@@ -1,3 +1,5 @@
+# @format
+
 type Post
   @model(
     mutations: { create: "createPost", delete: "deletePost", update: null }
@@ -13,6 +15,7 @@ type Post
         operations: [read, create, delete]
       }
       { allow: private, provider: userPools, operations: [read] }
+      { allow: private, provider: iam, operations: [create] }
     ]
   )
   @key(
@@ -50,6 +53,7 @@ type FollowRelationship
         operations: [read, create, delete]
       }
       { allow: private, provider: userPools, operations: [read] }
+      { allow: private, provider: iam, operations: [create] }
     ]
   )
   @key(fields: ["followeeId", "followerId"]) {
@@ -79,4 +83,10 @@ type Timeline
   timestamp: Int!
   postId: ID!
   post: Post @connection(fields: ["postId"])
+}
+
+type Mutation {
+  createPostAndTimeline(content: String!): Post
+    @function(name: "createPostAndTimeline-${env}")
+    @auth(rules: [{ allow: private, provider: userPools }])
 }
