@@ -37,7 +37,7 @@ exports.handler = async (event, context, callback) => {
     // for local mock
     env = {
       API_BOYAKIGQL_GRAPHQLAPIENDPOINTOUTPUT: 'http://localhost:20002/graphql',
-      REGION: 'us-east-1',
+      REGION: 'ap-northeast-1',
     }
     graphql_auth = {
       type: "AWS_IAM",
